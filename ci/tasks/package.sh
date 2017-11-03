@@ -15,12 +15,9 @@ pushd movie_fun_source
 popd
 
 
-for entry in "$movie_fun_source/target/*"
-do
-  echo "$entry"
-done
+echo $(ls ./movie_fun_source/target/*.*)
 
-find movie_fun_source/target -type f -name *_fun.war -exec cp "{}" package-output/movie_fun.war \;
+find movie_fun_source/target -type f -name *.war -exec cp "{}" package-output/movie_fun.war \;
 
 echo "Done packaging"
 exit 0
