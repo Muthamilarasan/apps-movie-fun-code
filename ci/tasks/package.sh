@@ -2,6 +2,9 @@
 
 set -e +x
 
+apt-get install software-properties-common
+apt-add-repository universe
+apt-get update
 apt-get install maven
 
 echo $PATH
