@@ -15,7 +15,7 @@ pushd movie_fun_source
 popd
 
 
-find movie_fun_source/target -type f -name *.jar -exec cp "{}" package-output/movie_fun.jar \;
+find movie_fun_source/target -type f -name *_fun.jar -exec cp "{}" package-output/movie_fun.jar \;
 
 echo "Done packaging"
 exit 0
