@@ -38,5 +38,5 @@ jobs:
   - task: smoke_test
     file: movie_fun_source/ci/tasks/smoke-test.yml
     params:
-      MOVIE_FUN_URL: http://movie—fun.apps.cumuluslabs.io/  #<---- REPLACE ME
+      MOVIE_FUN_URL: http://movie—fun-muthamil.apps.cumuluslabs.io/  #<---- REPLACE ME
 
