@@ -15,6 +15,11 @@ pushd movie_fun_source
 popd
 
 
+for entry in "$movie_fun_source/target"/*
+do
+  echo "$entry"
+done
+
 find movie_fun_source/target -type f -name *_fun.jar -exec cp "{}" package-output/movie_fun.jar \;
 
 echo "Done packaging"
