@@ -15,8 +15,5 @@ pushd movie_fun_source
 popd
 
 
-echo $(ls ./movie_fun_source/target/*.*)
-
-
 echo "Done Testing”
 exit 0
