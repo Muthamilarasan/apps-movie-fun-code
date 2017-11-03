@@ -1,0 +1,51 @@
+---
+resources:
+- name: attendee-service
+  type: git
+  source:
+    uri: https://github.com/Muthamilarasan/pcf-attendee-service-code.git   #<----- REPLACE ME
+    branch: master
+
+- name: deploy-attendee-service
+  type: cf
+  source:
+    api: http://api.system.cumuluslabs.io        #<----- REPLACE ME
+    username: {{cf-user}}
+    password: {{cf-password}}
+    organization: vekambaranathan-pal    #<----- REPLACE ME
+    space: sandbox         #<----- REPLACE ME
+    skip_cert_check: false
+
+jobs:
+- name: test
+  public: true
+  plan:
+  - get: attendee-service-source
+    trigger: true
+  - task: test
+    file: attendee-service-source/ci/tasks/test.yml
+
+- name: deploy
+  public: true
+  plan:
+  - get: attendee-service
+    trigger: true
+    passed: [test]
+  - task: package
+    file: attendee-service-source/ci/tasks/package.yml
+  - put: deploy-attendee-service
+    params:
+      manifest: attendee-service/manifest.yml
+      path: package-output/attendee-service.jar
+
+- name: smoke_test
+  public: true
+  plan:
+  - get: attendee-service-source
+    trigger: true
+    passed: [deploy]
+  - task: smoke_test
+    file: attendee-service-source/ci/tasks/smoke-test.yml
+    params:
+      ATTENDEE_SERVICE_URL: http://attendee-service-later-fraudulency.apps.cumuluslabs.io/  #<---- REPLACE ME
+

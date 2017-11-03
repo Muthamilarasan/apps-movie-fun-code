@@ -1,0 +1,17 @@
+---
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: ubuntu
+    tag: "latest"
+
+params:
+  MOVIE_FUN_URL:
+
+inputs:
+- name: movie_fun_source
+
+run:
+  path: movie_fun_source/ci/tasks/smoke-test.sh

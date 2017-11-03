@@ -1,0 +1,42 @@
+---
+resources:
+- name: movie_fun_source
+  type: git
+  source:
+    uri: https://github.com/Muthamilarasan/apps-movie-fun-code.git   #<----- REPLACE ME
+    branch: spring-boot
+
+- name: deploy-movie_fun
+  type: cf
+  source:
+    api: http://api.system.cumuluslabs.io        #<----- REPLACE ME
+    username: {{cf-user}}
+    password: {{cf-password}}
+    organization: mduraikannu-pal    #<----- REPLACE ME
+    space: sandbox         #<----- REPLACE ME
+    skip_cert_check: false
+
+jobs:
+- name: deploy
+  public: true
+  plan:
+  - get: movie_fun_source
+    trigger: true
+  - task: package
+    file: movie_fun_source/ci/tasks/package.yml
+  - put: deploy-movie_fun
+    params:
+      manifest: movie_fun_source/manifest.yml
+      path: package-output/movie_fun.jar
+
+- name: smoke_test
+  public: true
+  plan:
+  - get: movie_fun_source
+    trigger: true
+    passed: [deploy]
+  - task: smoke_test
+    file: movie_fun_source/ci/tasks/smoke-test.yml
+    params:
+      MOVIE_FUN_URL: http://movie—fun.apps.cumuluslabs.io/  #<---- REPLACE ME
+
