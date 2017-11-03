@@ -13,7 +13,7 @@ export PATH=$M2:$PATH
 
 pushd movie_fun_source
   echo "Packaging JAR"
-  ./mvn clean package -DskipTests
+  mvn clean package -DskipTests
 popd
 
 jar_count=`find movie_fun_source/target -type f -name *.jar | wc -l`
