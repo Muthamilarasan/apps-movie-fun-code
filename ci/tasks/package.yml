@@ -6,6 +6,10 @@ image_resource:
   source:
     repository: java
     tag: "8"
+  type: docker-image
+  source:
+    repository: maven
+    tag: "8"
 
 inputs:
 - name: movie_fun_source
