@@ -1,17 +1,22 @@
 #!/bin/bash
 
-set -ex
+set -e +x
 
-apt-get update && apt-get install -y curl
+apt-get update && apt-get install -y maven
 
-if [ -z $MOVIE_FUN_URL ]; then
-  echo "MOVIE_FUN_URL not set"
-  exit 1
-fi
+echo $PATH
+
+echo $mvn -version
+
 
 pushd movie_fun_source
-  echo "Running smoke tests for Movie fun deployed at $MOVIE_FUN_URL"
-  smoke-tests/bin/test $MOVIE_FUN_URL
+  echo "Packaging JAR"
+   MOVIE_FUN_URL=http://moviefun-muthamil.apps.cumuluslabs.io mvn test
 popd
 
+
+echo $(ls ./movie_fun_source/target/*.*)
+
+
+echo "Done Testing”
 exit 0
