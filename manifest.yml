@@ -4,6 +4,6 @@ applications:
   memory: 1024M
   disk_quota: 1024M
   stack: cflinuxfs2
-  path: target/movie_fun.jar
+  path: target/movie_fun.war
   services:
     - movie-mysql
