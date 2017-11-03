@@ -2,18 +2,16 @@
 
 set -e +x
 
-echo $PATH
-export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
-export PATH=$JAVA_HOME/bin:$PATH
+apt-get install maven
 
-export M2_HOME=/usr/local/apache-maven/apache-maven-3.3.9
-export M2=$M2_HOME/bin
-export MAVEN_OPTS="-Xms256m -Xmx512m"
-export PATH=$M2:$PATH
+echo $PATH
+
+echo $mvn -version
+
 
 pushd movie_fun_source
   echo "Packaging JAR"
-   ./mvnw clean package -DskipTests
+   mvn clean package -DskipTests
 popd
 
 jar_count=`find movie_fun_source/target -type f -name *.jar | wc -l`
